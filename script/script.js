@@ -46,6 +46,18 @@ function renderTopics() {
     const topicsGrid = document.getElementById('topicsGrid');
     topicsGrid.innerHTML = '';
     
+// Load topic progress from localStorage
+const savedProgress = JSON.parse(localStorage.getItem('topic-progress'));
+if (savedProgress) {
+  savedProgress.forEach(saved => {
+    const topic = topics.find(t => t.id === saved.id);
+    if (topic) {
+      topic.completed = saved.completed;
+    }
+  });
+}
+
+
     topics.forEach(topic => {
         const topicCard = document.createElement('div');
         topicCard.className = 'topic-card';
@@ -162,9 +174,29 @@ function selectAnswer(answerIndex) {
             if (topic) {
                 topic.completed = Math.max(topic.completed, currentQuestions.length);
             }
+          localStorage.setItem('topic-progress', JSON.stringify(
+          topics.map(t => ({ id: t.id, completed: t.completed }))
+          ));
+
+            saveQuizResult(selectedTopic, score, currentQuestions.length);
             showResultsPage();
         }
     }, 1500);
+
+    auth.onAuthStateChanged(user => {
+  if (user) {
+    const attempt = {
+      topic: selectedTopic,
+      score: score,
+      total: currentQuestions.length,
+      date: new Date().toISOString()
+    };
+    db.collection("users").doc(user.uid).set({
+      attempts: firebase.firestore.FieldValue.arrayUnion(attempt)
+    }, { merge: true });
+  }
+});
+
 }
 
 // Render quiz results
@@ -190,11 +222,40 @@ function renderResults() {
 
 // Render dashboard
 function renderDashboard() {
+
+    auth.onAuthStateChanged(user => {
+  if (user) {
+    db.collection("users").doc(user.uid).get().then(doc => {
+      const data = doc.data();
+      if (!data || !data.attempts) return;
+
+      const totalQ = data.attempts.reduce((sum, a) => sum + a.total, 0);
+      const totalC = data.attempts.reduce((sum, a) => sum + a.score, 0);
+      const accuracy = Math.round((totalC / totalQ) * 100);
+
+      document.getElementById('questionsCompleted').textContent = `${totalC}/${totalQ}`;
+      document.getElementById('averageScore').textContent = `${accuracy}%`;
+      // You can store streak data as well
+    });
+  }
+});
+
     const topicProgress = document.getElementById('topicProgress');
     if (!topicProgress) return;
     
     topicProgress.innerHTML = '';
-    
+    const progress = JSON.parse(localStorage.getItem('dsa-progress')) || {};
+const attempts = progress.attempts || [];
+
+const totalQuestions = attempts.reduce((acc, curr) => acc + curr.total, 0);
+const totalCorrect = attempts.reduce((acc, curr) => acc + curr.score, 0);
+const accuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+
+document.getElementById('questionsCompleted').textContent = `${totalCorrect}/${totalQuestions}`;
+document.getElementById('averageScore').textContent = `${accuracy}%`;
+document.getElementById('currentStreak').textContent = `${progress.streakDays || 0} days`;
+
+
     topics.forEach(topic => {
         const progressItem = document.createElement('div');
         progressItem.className = 'topic-progress-item';
@@ -224,6 +285,33 @@ function renderDashboard() {
         topicProgress.appendChild(progressItem);
     });
 }
+
+function saveQuizResult(topic, score, total) {
+  const progress = JSON.parse(localStorage.getItem('dsa-progress')) || {
+    attempts: [],
+    streakDays: 0,
+    lastDate: null
+  };
+
+  const today = new Date().toISOString().split('T')[0];
+  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+
+  if (progress.lastDate !== today) {
+    progress.streakDays = (progress.lastDate === yesterday) ? progress.streakDays + 1 : 1;
+    progress.lastDate = today;
+  }
+
+  progress.attempts.push({
+    topic,
+    score,
+    total,
+    date: today
+  });
+
+  localStorage.setItem('dsa-progress', JSON.stringify(progress));
+}
+
+
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {

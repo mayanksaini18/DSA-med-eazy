@@ -37,6 +37,9 @@
                   <a href="/projects.html" class="btn">Projects</a>
                   <a href="/dsa.html" class="btn">DSA Guide</a>
                   <a href="#contact" class="btn">Contact</a>
+                  <button onclick="signInWithGoogle()" class="btn btn-primary" style="padding: 8px 15px;">Login</button>
+                  <button onclick="logout()"  class="btn btn-primary" style="padding: 8px 15px;"">Logout</button>
+
                 </div>
                 <!-- <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" onclick="showTopics()">Get Started</button> -->
               
@@ -230,8 +233,8 @@
             <nav class="nav">
                 <button class="btn btn-ghost" onclick="showHome()">← Back to Home</button>
                 <div class="logo">
-                    <div class="logo-icon">D</div>
-                    <span class="logo-text">DSA Quest</span>
+                    <!-- <div class="logo-icon">D</div> -->
+                    <span class="logo-text">DSA Med eazy</span>
                 </div>
                 <button class="btn btn-primary" onclick="showTopics()">Take Quiz</button>
             </nav>
@@ -245,18 +248,23 @@
 
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon">🏆</div>
-                    <div class="stat-value">23/100</div>
+                    <div class="stat-icon">
+                     <i class="fas fa-trophy fa-2x text-yellow-500 mb-3"></i>
+
+                    </div>
+                    <div id="questionsCompleted" class="stat-value">23/100</div>
                     <div class="stat-label">Questions Completed</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">🎯</div>
-                    <div class="stat-value">78%</div>
+                    <div class="stat-icon"><i class="fas fa-chart-line fa-2x text-indigo-600 mb-3"></i>
+                </div>
+                    <div id="averageScore" class="stat-value">78%</div>
                     <div class="stat-label">Average Score</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-value">7 days</div>
+                    <div class="stat-icon"><i class="fas fa-fire fa-2x text-orange-500"></i>
+                </div>
+                    <div id="currentStreak" class="stat-value">7 days</div>
                     <div class="stat-label">Current Streak</div>
                 </div>
             </div>
@@ -275,6 +283,15 @@
 
 
     <script src="script/questions.js"></script>
-    <script src="script/script.js"></script>
+    <!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+  <!-- Your Firebase logic file -->
+<script src="script/firebase.js"></script>
+
+<!-- Your main app logic -->
+<script src="script/script.js"></script>
 </body>
 </html>
