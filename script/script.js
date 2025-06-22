@@ -66,43 +66,27 @@ if (savedProgress) {
         const progressPercentage = Math.round((topic.completed / topic.questions) * 100);
         
         topicCard.innerHTML = `
- <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition duration-300 cursor-pointer">
-  <!-- Header: Icon, Title, Difficulty -->
-  <div class="flex justify-between items-start mb-4">
-    <!-- Left: Icon + Name -->
-    <div class="flex items-center gap-4">
-      <div class="text-3xl">
-        ${topic.icon}
-      </div>
-      <div>
-        <div class="text-lg font-semibold text-gray-800">${topic.name}</div>
-        <div class="text-sm text-gray-500">${topic.questions} questions</div>
-      </div>
-    </div>
-
-    <!-- Right: Difficulty Badge -->
-    <div class="text-xs font-semibold px-3 py-1 rounded-full
-      ${topic.difficulty.toLowerCase() === 'easy' ? 'bg-green-100 text-green-600' : ''}
-      ${topic.difficulty.toLowerCase() === 'medium' ? 'bg-yellow-100 text-yellow-600' : ''}
-      ${topic.difficulty.toLowerCase() === 'hard' ? 'bg-red-100 text-red-600' : ''}">
-      ${topic.difficulty}
-    </div>
-  </div>
-
-  <!-- Progress Bar -->
-  <div class="space-y-1">
-    <div class="flex justify-between text-sm text-gray-600">
-      <span>Progress</span>
-      <span>${topic.completed}/${topic.questions}</span>
-    </div>
-    <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-      <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-300"
-           style="width: ${progressPercentage}%">
-      </div>
-    </div>
-  </div>
-</div>
-
+            <div class="topic-header">
+                <div class="topic-info">
+                    <div class="topic-icon">${topic.icon}</div>
+                    <div>
+                        <div class="topic-title">${topic.name}</div>
+                        <div class="topic-subtitle">${topic.questions} questions</div>
+                    </div>
+                </div>
+                <div class="difficulty-badge difficulty-${topic.difficulty.toLowerCase()}">
+                    ${topic.difficulty}
+                </div>
+            </div>
+            <div class="topic-progress">
+                <div class="progress-info">
+                    <span>Progress</span>
+                    <span>${topic.completed}/${topic.questions}</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${progressPercentage}%"></div>
+                </div>
+            </div>
         `;
         
         topicsGrid.appendChild(topicCard);
