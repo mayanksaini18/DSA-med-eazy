@@ -30,7 +30,20 @@ const questionsData = {
             options: ["Random access", "Cache locality", "Dynamic size", "Memory efficiency"],
             correct: 2,
             explanation: "Traditional arrays have fixed size. Dynamic arrays exist but aren't the default in all languages."
-        }
+        },
+        {
+  question: "Which of the following operations is most efficient on an array?",
+  options: ["Insert at beginning", "Insert at middle", "Delete at middle", "Access by index"],
+  correct: 3,
+  explanation: "Access by index in an array is O(1), while insertions/deletions require shifting."
+},
+{
+  question: "What is the drawback of using arrays for implementing stacks?",
+  options: ["Slow access", "Fixed size", "No LIFO behavior", "Expensive insertions"],
+  correct: 1,
+  explanation: "Stacks require dynamic resizing which arrays cannot provide unless they are dynamic arrays."
+}
+
     ],
     
     strings: [
@@ -57,7 +70,20 @@ const questionsData = {
             options: ["4 bits", "6 bits", "7 bits", "8 bits"],
             correct: 3,
             explanation: "ASCII uses 8 bits (1 byte) per character, though only 7 bits are used for the character set."
-        }
+        },
+        {
+  question: "Which of the following methods is efficient for string comparison?",
+  options: ["Loop character-by-character", "Compare ASCII sum", "Use hashing", "Compare reversed strings"],
+  correct: 2,
+  explanation: "Hashing allows quick comparison, especially useful in string search algorithms."
+},
+{
+  question: "Which of the following is true about strings in Java?",
+  options: ["Strings are mutable", "Strings are stored as character arrays", "Strings are thread-unsafe", "Strings support pointer arithmetic"],
+  correct: 1,
+  explanation: "Strings in Java are stored as character arrays and are immutable by default."
+}
+
     ],
     
     linkedlists: [
@@ -84,7 +110,20 @@ const questionsData = {
             options: ["Only data", "Data and next pointer", "Data and previous pointer", "Data, next and previous pointers"],
             correct: 3,
             explanation: "Doubly linked lists have pointers to both the next and previous nodes for bidirectional traversal."
-        }
+        },
+        {
+  question: "Which operation is costly in singly linked lists?",
+  options: ["Insertion at beginning", "Traversal", "Deletion from head", "Appending a node at head"],
+  correct: 1,
+  explanation: "Traversal is O(n) as you must go node by node from head to tail."
+},
+{
+  question: "What happens if a node's next pointer is null?",
+  options: ["It's invalid", "It causes an error", "It's the last node", "It’s the head"],
+  correct: 2,
+  explanation: "A null `next` pointer indicates the end of the linked list."
+}
+
     ],
     
     trees: [
@@ -111,7 +150,20 @@ const questionsData = {
             options: ["log n", "⌊log₂ n⌋", "⌈log₂ n⌉", "n"],
             correct: 2,
             explanation: "The height of a complete binary tree is ⌈log₂(n+1)⌉ - 1, which is ⌈log₂ n⌉."
-        }
+        },
+        {
+  question: "Which data structure is used in implementing recursion for tree traversals?",
+  options: ["Queue", "Stack", "Heap", "Graph"],
+  correct: 1,
+  explanation: "Recursion uses call stack implicitly, which mimics stack behavior."
+},
+{
+  question: "Which tree is best suited for implementing dictionaries?",
+  options: ["Binary Search Tree", "AVL Tree", "Trie", "Heap"],
+  correct: 2,
+  explanation: "Tries are designed for efficient prefix matching and dictionary-like operations."
+}
+
     ],
     
     graphs: [
@@ -138,7 +190,20 @@ const questionsData = {
             options: ["A graph with no cycles", "A maximal set of vertices with paths between all pairs", "A tree structure", "A graph with weighted edges"],
             correct: 1,
             explanation: "A strongly connected component is a maximal set of vertices where there's a path from every vertex to every other vertex."
-        }
+        },
+        {
+  question: "What is the minimum number of edges in a connected graph with n nodes?",
+  options: ["0", "n", "n-1", "n+1"],
+  correct: 2,
+  explanation: "A connected graph with no cycles is a tree and has n-1 edges."
+},
+{
+  question: "Which graph traversal is used to check for cycles in a graph?",
+  options: ["BFS", "DFS", "Dijkstra", "Prim's"],
+  correct: 1,
+  explanation: "DFS is commonly used to detect cycles in both directed and undirected graphs."
+}
+
     ],
     
     dp: [
@@ -165,7 +230,20 @@ const questionsData = {
             options: ["Greedy choice property", "Optimal substructure only", "Overlapping subproblems only", "Both optimal substructure and overlapping subproblems"],
             correct: 3,
             explanation: "LCS has both optimal substructure and overlapping subproblems, making it suitable for DP."
-        }
+        },
+        {
+  question: "Which problem is not suitable for dynamic programming?",
+  options: ["Knapsack", "Fibonacci", "Merge Sort", "Matrix Chain Multiplication"],
+  correct: 2,
+  explanation: "Merge Sort is divide and conquer, not DP. It has no overlapping subproblems."
+},
+{
+  question: "What does memoization help avoid in DP?",
+  options: ["Recomputing subproblems", "Increasing recursion depth", "Using loops", "Reducing input size"],
+  correct: 0,
+  explanation: "Memoization caches results to avoid solving the same subproblems again."
+}
+
     ]
 };
 
