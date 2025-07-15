@@ -1,4 +1,3 @@
-// Global state
 let currentView = 'home';
 let selectedTopic = null;
 let currentQuestionIndex = 0;
@@ -7,7 +6,6 @@ let userAnswers = [];
 let currentQuestions = [];
 let showResults = false;
 
-// Page navigation functions
 function showPage(pageId) {
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
@@ -40,18 +38,17 @@ function showDashboard() {
     renderDashboard();
 }
 
-// Render topics grid
 function renderTopics() {
     const topicsGrid = document.getElementById('topicsGrid');
     topicsGrid.innerHTML = '';
-    
+
     topics.forEach(topic => {
         const topicCard = document.createElement('div');
         topicCard.className = 'topic-card';
         topicCard.onclick = () => selectTopic(topic.id);
-        
+
         const progressPercentage = Math.round((topic.completed / topic.questions) * 100);
-        
+
         topicCard.innerHTML = `
             <div class="topic-header">
                 <div class="topic-info">
@@ -75,12 +72,10 @@ function renderTopics() {
                 </div>
             </div>
         `;
-        
         topicsGrid.appendChild(topicCard);
     });
 }
 
-// Select topic and start quiz
 function selectTopic(topicId) {
     selectedTopic = topicId;
     currentQuestions = questionsData[topicId] || [];
@@ -91,35 +86,27 @@ function selectTopic(topicId) {
     showQuiz();
 }
 
-// Start quiz
 function startQuiz() {
     if (!currentQuestions.length) {
-        alert('No questions available for this topic!');
+        alert('No questions available!');
         showTopics();
         return;
     }
-    
     renderQuestion();
 }
 
-// Render current question
 function renderQuestion() {
     const question = currentQuestions[currentQuestionIndex];
     const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
-    
-    // Update progress
+
     document.getElementById('progressFill').style.width = progress + '%';
     document.getElementById('progressText').textContent = Math.round(progress) + '% Complete';
-    document.getElementById('questionCounter').textContent = 
-        `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
-    
-    // Update question
+    document.getElementById('questionCounter').textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
     document.getElementById('questionText').textContent = question.question;
-    
-    // Update options
+
     const optionsContainer = document.getElementById('optionsContainer');
     optionsContainer.innerHTML = '';
-    
+
     question.options.forEach((option, index) => {
         const button = document.createElement('button');
         button.className = 'option-btn';
@@ -127,58 +114,65 @@ function renderQuestion() {
         button.onclick = () => selectAnswer(index);
         optionsContainer.appendChild(button);
     });
+
+    document.getElementById('explanationText').classList.add('hidden');
+    document.getElementById('explanationText').textContent = '';
+
+    const nextBtn = document.getElementById('nextBtn');
+    if (nextBtn) nextBtn.style.display = 'none';
 }
 
-// Handle answer selection
 function selectAnswer(answerIndex) {
     const question = currentQuestions[currentQuestionIndex];
     const buttons = document.querySelectorAll('.option-btn');
-    
-    // Disable all buttons
+
+    // Prevent double-answering
+    if (userAnswers[currentQuestionIndex] !== undefined) return;
+
     buttons.forEach(btn => btn.disabled = true);
-    
-    // Show correct/incorrect
-    buttons[answerIndex].classList.add(answerIndex === question.correct ? 'correct' : 'incorrect');
-    if (answerIndex !== question.correct) {
+
+    if (answerIndex === question.correct) {
+        buttons[answerIndex].classList.add('correct');
+        score++;
+    } else {
+        buttons[answerIndex].classList.add('incorrect');
         buttons[question.correct].classList.add('correct');
     }
-    
-    // Update score
-    if (answerIndex === question.correct) {
-        score++;
-    }
-    
+
     userAnswers[currentQuestionIndex] = answerIndex;
-    
-    // Move to next question after delay
-    setTimeout(() => {
-        if (currentQuestionIndex < currentQuestions.length - 1) {
-            currentQuestionIndex++;
-            renderQuestion();
-        } else {
-            // Update topic completion
-            const topic = topics.find(t => t.id === selectedTopic);
-            if (topic) {
-                topic.completed = Math.max(topic.completed, currentQuestions.length);
-            }
-            showResultsPage();
-        }
-    }, 1500);
+    // Show explanation
+    const explanation = question.explanation || "Explanation not available.";
+    const explanationText = document.getElementById("explanationText");
+    explanationText.textContent = explanation;
+    explanationText.classList.remove("d-none");
+
+
+    const nextBtn = document.getElementById('nextBtn');
+    if (nextBtn) nextBtn.style.display = 'inline-block';
 }
 
-// Render quiz results
+function goToNext() {
+    if (currentQuestionIndex < currentQuestions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+    } else {
+        const topic = topics.find(t => t.id === selectedTopic);
+        if (topic) {
+            topic.completed = Math.max(topic.completed, currentQuestions.length);
+        }
+        showResultsPage();
+    }
+}
+
 function renderResults() {
     const percentage = Math.round((score / currentQuestions.length) * 100);
-    
     document.getElementById('scorePercentage').textContent = percentage + '%';
-    document.getElementById('scoreText').textContent = 
-        `Your Score: ${score}/${currentQuestions.length}`;
-    
-    // Render stars based on percentage
+    document.getElementById('scoreText').textContent = `Your Score: ${score}/${currentQuestions.length}`;
+
     const starsContainer = document.getElementById('starsContainer');
     starsContainer.innerHTML = '';
     const starCount = Math.floor(percentage / 20);
-    
+
     for (let i = 0; i < 5; i++) {
         const star = document.createElement('span');
         star.className = i < starCount ? 'star' : 'star empty';
@@ -187,19 +181,18 @@ function renderResults() {
     }
 }
 
-// Render dashboard
 function renderDashboard() {
     const topicProgress = document.getElementById('topicProgress');
     if (!topicProgress) return;
-    
+
     topicProgress.innerHTML = '';
-    
+
     topics.forEach(topic => {
         const progressItem = document.createElement('div');
         progressItem.className = 'topic-progress-item';
-        
+
         const progressPercentage = Math.round((topic.completed / topic.questions) * 100);
-        
+
         progressItem.innerHTML = `
             <div class="topic-progress-info">
                 <span class="topic-icon">${topic.icon}</span>
@@ -219,12 +212,10 @@ function renderDashboard() {
                 </div>
             </div>
         `;
-        
         topicProgress.appendChild(progressItem);
     });
 }
 
-// Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     showHome();
 });
