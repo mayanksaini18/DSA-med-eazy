@@ -140,13 +140,11 @@ function selectAnswer(answerIndex) {
     }
 
     userAnswers[currentQuestionIndex] = answerIndex;
-    // Show explanation
-    const explanation = question.explanation || "Explanation not available.";
-    const explanationText = document.getElementById("explanationText");
-    explanationText.textContent = explanation;
-    explanationText.classList.remove("d-none");
 
-
+    const explanationEl = document.getElementById('explanationText');
+    explanationEl.textContent = question.explanation;
+    explanationEl.classList.remove('hidden');
+// explanantion is not showing bbelow the btn
     const nextBtn = document.getElementById('nextBtn');
     if (nextBtn) nextBtn.style.display = 'inline-block';
 }
