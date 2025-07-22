@@ -242,105 +242,7 @@ const questionsData = {
   options: ["Recomputing subproblems", "Increasing recursion depth", "Using loops", "Reducing input size"],
   correct: 0,
   explanation: "Memoization caches results to avoid solving the same subproblems again."
-},
-
-  stacks: [
-    {
-      question: "What is the time complexity of push and pop operations in a stack?",
-      options: ["O(1)", "O(n)", "O(log n)", "O(n²)"],
-      correct: 0,
-      explanation: "Push and pop in a stack are constant time operations as they operate on one end."
-    },
-    {
-      question: "Which data structure is used to implement function call stack?",
-      options: ["Queue", "Array", "Stack", "Heap"],
-      correct: 2,
-      explanation: "Stack is used to store function calls in memory for LIFO order execution."
-    },
-    {
-      question: "Which of the following is a postfix expression evaluator naturally suited for?",
-      options: ["Queue", "Array", "Stack", "Tree"],
-      correct: 2,
-      explanation: "Postfix expressions are evaluated using stacks due to LIFO nature."
-    },
-    {
-      question: "Which of the following is NOT a stack application?",
-      options: ["Undo operation", "Parenthesis matching", "Level order traversal", "Function calls"],
-      correct: 2,
-      explanation: "Level order traversal is implemented using queues, not stacks."
-    },
-    {
-      question: "What happens when a stack overflows?",
-      options: ["Memory leak", "Segmentation fault", "Program crash", "Stack memory exceeds limit"],
-      correct: 3,
-      explanation: "Overflow happens when stack memory exceeds the limit."
-    }
-  ],
-
-  queues: [
-    {
-      question: "Which data structure follows FIFO principle?",
-      options: ["Stack", "Queue", "Tree", "Graph"],
-      correct: 1,
-      explanation: "Queue is a First-In-First-Out (FIFO) data structure."
-    },
-    {
-      question: "Which operation is not efficient in a simple array-based queue?",
-      options: ["Enqueue", "Dequeue", "Peek", "None of the above"],
-      correct: 1,
-      explanation: "Dequeue requires shifting elements in a simple array-based queue, making it inefficient."
-    },
-    {
-      question: "Which variant of queue allows insertion and deletion from both ends?",
-      options: ["Simple queue", "Priority queue", "Circular queue", "Deque"],
-      correct: 3,
-      explanation: "Deque (double-ended queue) allows both insertions and deletions from both ends."
-    },
-    {
-      question: "What is the advantage of a circular queue over a linear queue?",
-      options: ["Less memory", "Faster access", "No overflow if there is space", "Simpler implementation"],
-      correct: 2,
-      explanation: "Circular queues reuse space, avoiding overflow if there’s space at the beginning."
-    },
-    {
-      question: "Which data structure is used to implement a queue efficiently?",
-      options: ["Array", "Stack", "Linked List", "Heap"],
-      correct: 2,
-      explanation: "Linked lists efficiently support queue operations at both ends."
-    }
-  ],
-
-  hashing: [
-    {
-      question: "What is the average time complexity for search, insert, and delete in a hash table?",
-      options: ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
-      correct: 0,
-      explanation: "With a good hash function and low load factor, operations are O(1) on average."
-    },
-    {
-      question: "What is a collision in hashing?",
-      options: ["Different keys with same values", "Same key inserted twice", "Same hash for two keys", "Insertion failure"],
-      correct: 2,
-      explanation: "A collision occurs when two keys produce the same hash index."
-    },
-    {
-      question: "Which technique resolves hash collisions?",
-      options: ["Recursion", "Looping", "Chaining", "Heaps"],
-      correct: 2,
-      explanation: "Chaining stores multiple values in the same bucket using linked lists."
-    },
-    {
-      question: "What is the load factor in a hash table?",
-      options: ["Number of keys", "Table size", "Ratio of keys to buckets", "Hash function size"],
-      correct: 2,
-      explanation: "Load factor is the ratio of the number of stored keys to the table size."
-    },
-    {
-      question: "Which hash function property is important to reduce collisions?",
-      options: ["Consistency", "Uniform distribution", "Modularity", "Simplicity"],
-      correct: 1,
-      explanation: "A good hash function distributes keys uniformly to reduce collisions."
-    }
+}
 
     ]
 };
@@ -353,7 +255,4 @@ const topics = [
     { id: 'trees', name: 'Trees', icon: '🌳', difficulty: 'Medium', questions: 4, completed: 0 },
     { id: 'graphs', name: 'Graphs', icon: '🕸️', difficulty: 'Hard', questions: 4, completed: 0 },
     { id: 'dp', name: 'Dynamic Programming', icon: '⚡', difficulty: 'Hard', questions: 4, completed: 0 }
-    { id: 'stacks', name: 'Stacks', icon: '📥', difficulty: 'Easy', questions: 5, completed: 0 },
-    { id: 'queues', name: 'Queues', icon: '📤', difficulty: 'Easy', questions: 5, completed: 0 },
-    { id: 'hashing', name: 'Hashing', icon: '🔢', difficulty: 'Medium', questions: 5, completed: 0 }
 ];
