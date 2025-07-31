@@ -54,8 +54,9 @@ function renderTopics() {
         topicCard.className = 'topic-card';
         topicCard.onclick = () => selectTopic(topic.id); // Select this topic on click
 
+        const totalQuestions = questionsData[topic.id]?.length || 0;
         // Calculate progress as a percentage
-        const progressPercentage = Math.round((topic.completed / topic.questions) * 100);
+        const progressPercentage = totalQuestions > 0 ? Math.round((topic.completed / totalQuestions) * 100) : 0;
 
         // Create the topic card layout
         topicCard.innerHTML = `
@@ -64,7 +65,7 @@ function renderTopics() {
                     <div class="topic-icon">${topic.icon}</div>
                     <div>
                         <div class="topic-title">${topic.name}</div>
-                        <div class="topic-subtitle">${topic.questions} questions</div>
+                        <div class="topic-subtitle">${totalQuestions} questions</div>
                     </div>
                 </div>
                 <div class="difficulty-badge difficulty-${topic.difficulty.toLowerCase()}">
@@ -74,7 +75,7 @@ function renderTopics() {
             <div class="topic-progress">
                 <div class="progress-info">
                     <span>Progress</span>
-                    <span>${topic.completed}/${topic.questions}</span>
+                    <span>${topic.completed}/${totalQuestions}</span>
                 </div>
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: ${progressPercentage}%"></div>
@@ -93,7 +94,6 @@ function selectTopic(topicId) {
     currentQuestionIndex = 0;
     score = 0;
     userAnswers = [];
-    showResults = false;
     showQuiz(); // Switch to quiz screen
 }
 
@@ -183,7 +183,7 @@ function goToNext() {
         // Mark the topic as completed
         const topic = topics.find(t => t.id === selectedTopic);
         if (topic) {
-            topic.completed = Math.max(topic.completed, currentQuestions.length);
+            topic.completed = currentQuestions.length; // Mark all questions as completed for this topic
         }
         showResultsPage(); // Quiz ends, show results
     }
