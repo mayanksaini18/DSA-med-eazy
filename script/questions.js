@@ -249,10 +249,10 @@ const questionsData = {
 
 // Topics configuration
 const topics = [
-    { id: 'arrays', name: 'Arrays', icon: '📊', difficulty: 'Easy', questions: 5, completed: 0 },
-    { id: 'strings', name: 'Strings', icon: '🔤', difficulty: 'Easy', questions: 4, completed: 0 },
-    { id: 'linkedlists', name: 'Linked Lists', icon: '🔗', difficulty: 'Medium', questions: 4, completed: 0 },
-    { id: 'trees', name: 'Trees', icon: '🌳', difficulty: 'Medium', questions: 4, completed: 0 },
-    { id: 'graphs', name: 'Graphs', icon: '🕸️', difficulty: 'Hard', questions: 4, completed: 0 },
-    { id: 'dp', name: 'Dynamic Programming', icon: '⚡', difficulty: 'Hard', questions: 4, completed: 0 }
+    { id: 'arrays', name: 'Arrays', icon: '📊', difficulty: 'Easy', completed: 0 },
+    { id: 'strings', name: 'Strings', icon: '🔤', difficulty: 'Easy', completed: 0 },
+    { id: 'linkedlists', name: 'Linked Lists', icon: '🔗', difficulty: 'Medium', completed: 0 },
+    { id: 'trees', name: 'Trees', icon: '🌳', difficulty: 'Medium', completed: 0 },
+    { id: 'graphs', name: 'Graphs', icon: '🕸️', difficulty: 'Hard', completed: 0 },
+    { id: 'dp', name: 'Dynamic Programming', icon: '⚡', difficulty: 'Hard', completed: 0 }
 ];
